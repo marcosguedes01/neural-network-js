@@ -21,6 +21,14 @@ class Matrix {
     return matrix;
   }
 
+  static matrixToArray(obj) {
+    let arr = [];
+    obj.map((elem) => {
+      arr.push(elem);
+    });
+    return arr;
+  }
+
   print() {
     console.table(this.data);
   }
@@ -28,16 +36,16 @@ class Matrix {
   randomize() {
     this.map((elem, i, j) => {
       return Math.random() * 2 - 1;
-    })
+    });
   }
 
   static map(A, func) {
-    let matrix = new Matrix(A.rows, B.rows);
+    let matrix = new Matrix(A.rows, A.cols);
 
-    matrix.data = matrix.data.map((arr, i) => {
+    matrix.data = A.data.map((arr, i) => {
       return arr.map((num, j) => {
         return func(num, i, j);
-      })
+      });
     });
 
     return matrix;
@@ -47,16 +55,48 @@ class Matrix {
     this.data = this.data.map((arr, i) => {
       return arr.map((num, j) => {
         return func(num, i, j);
-      })
+      });
     });
 
     return this;
+  }
+
+  static transpose(A) {
+    var matrix = new Matrix(A.cols, A.rows);
+    matrix.map((num, i, j) => {
+      return A.data[j][i];
+    });
+    return matrix;
+  }
+
+  static escalar_multiply(A, escalar) {
+    var matrix = new Matrix(A.rows, A.cols);
+    matrix.map((num, i, j) => {
+      return A.data[i][j] * escalar;
+    });
+    return matrix;
+  }
+
+  static hadamard(A, B) {
+    var matrix = new Matrix(A.rows, A.cols);
+    matrix.map((num, i, j) => {
+      return A.data[i][j] * B.data[i][j];
+    });
+    return matrix;
   }
 
   static add(A, B) {
     var matrix = new Matrix(A.rows, A.cols);
     matrix.map((num, i, j) => {
       return A.data[i][j] + B.data[i][j];
+    });
+    return matrix;
+  }
+
+  static subtract(A, B) {
+    var matrix = new Matrix(A.rows, A.cols);
+    matrix.map((num, i, j) => {
+      return A.data[i][j] - B.data[i][j];
     });
     return matrix;
   }
